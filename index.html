@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sapphire Internship Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-gem"></i>
+                <span>Sapphire Platform</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-btn" data-section="tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>Tasks</span>
+                </button>
+
+                <button class="nav-btn" data-section="deadlines">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Deadlines</span>
+                </button>
+                <button class="nav-btn" data-section="meetings">
+                    <i class="fas fa-comments"></i>
+                    <span>Meetings</span>
+                </button>
+                <button class="nav-btn" data-section="resources">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </button>
+                <button class="nav-btn" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+            </div>
+            <button class="nav-btn" onclick="logoutUser()" style="margin-left:auto;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>            
+            <button class="help-btn" id="askForHelp">
+                <i class="fas fa-question-circle"></i>
+                <span>Ask for Help</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="dashboard-container">
+                <div class="welcome-section">
+                    <h1 id="greeting">Good Evening!</h1>
+                    <p class="date-display" id="currentDate"></p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Today's Tasks -->
+                    <div class="card dashboard-card">
+                        <div class="card__header">
+                            <h3><i class="fas fa-tasks"></i> Today's Tasks</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="task-item">
+                                <div class="task-priority high"></div>
+                                <div class="task-content">
+                                    <h4>Weekly team meeting preparation</h4>
+                                    <p>Due: October 2, 2025</p>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-priority medium"></div>
+                                <div class="task-content">
+                                    <h4>Review workplace safety protocols</h4>
+                                    <p>Due: October 8, 2025</p>
+                                </div>
+                            </div>
+                            <button class="btn btn--outline btn--sm" onclick="showSection('tasks')">View All Tasks</button>
+                        </div>
+                    </div>
+
+                    <!-- Mood Check-in -->
+                    <div class="card dashboard-card">
+                        <div class="card__header">
+                            <h3><i class="fas fa-heart"></i> How are you feeling?</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="mood-checkin">
+                                <div class="mood-options">
+                                    <button class="mood-btn" data-mood="5">😄</button>
+                                    <button class="mood-btn" data-mood="4">🙂</button>
+                                    <button class="mood-btn selected" data-mood="3">😐</button>
+                                    <button class="mood-btn" data-mood="2">😟</button>
+                                    <button class="mood-btn" data-mood="1">😞</button>
+                                </div>
+                                <div class="energy-level">
+                                    <label>Energy Level:</label>
+                                    <input type="range" id="energySlider" min="1" max="5" value="3" class="energy-slider">
+                                    <span id="energyLabel">Moderate Energy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card dashboard-card">
+                        <div class="card__header">
+                            <h3><i class="fas fa-lightning-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="quick-actions">
+                                <button class="btn btn--primary btn--sm" onclick="showSection('tasks')">
+                                    <i class="fas fa-plus"></i> Add Task
+                                </button>
+                                <button class="btn btn--secondary btn--sm" onclick="showSection('meetings')">
+                                    <i class="fas fa-microphone"></i> View Meetings
+                                </button>
+                                <button class="btn btn--outline btn--sm" onclick="showSection('resources')">
+                                    <i class="fas fa-book-open"></i> Browse Resources
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Overview -->
+                    <div class="card dashboard-card architecture-card">
+                        <div class="card__header">
+                            <h3><i class="fas fa-sitemap"></i> Platform Overview</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="architecture-wrapper">
+                                <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7e33f05c8d808293b50d3f649bf25bc8/3be4b797-0364-435f-a482-491a0e47e812/94050b70.png" 
+                                     alt="Platform Architecture Diagram showing the central digital platform with six main feature modules" 
+                                     class="architecture-diagram"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="image-fallback" style="display: none;">
+                                    <p>Platform Architecture: Central hub connecting Organization Tools, Deadline Management, Meeting Transcription, Resource Library, Flexible Workflows, and Optional Supports.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Journey -->
+                    <div class="card dashboard-card journey-card">
+                        <div class="card__header">
+                            <h3><i class="fas fa-route"></i> Your Internship Journey</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="journey-wrapper">
+                                <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7e33f05c8d808293b50d3f649bf25bc8/71ff4dd6-6d52-4e91-a314-33a234d2d592/40c04daf.png" 
+                                     alt="Student User Journey flowchart showing progression through the digital platform" 
+                                     class="journey-diagram"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="image-fallback" style="display: none;">
+                                    <p>Your journey through the platform: Onboarding → Daily Check-ins → Task Management → Meeting Support → Resources Access → Weekly Review</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section id="tasks" class="content-section">
+            <div class="section-header">
+                <h2>Organization Tool</h2>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="kanban">
+                        <i class="fas fa-columns"></i> Kanban
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                    <button class="view-btn" data-view="calendar">
+                        <i class="fas fa-calendar"></i> Calendar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Kanban View -->
+            <div id="kanban-view" class="task-view active">
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <h3>Pending</h3>
+                        <div class="task-card" data-task-id="2">
+                            <div class="task-priority medium"></div>
+                            <h4>Weekly team meeting preparation</h4>
+                            <p>Prepare talking points and questions for team meeting</p>
+                            <div class="task-meta">
+                                <span class="due-date">Due: Oct 2</span>
+                                <span class="category meetings">Meetings</span>
+                            </div>
+                        </div>
+                        <div class="task-card" data-task-id="3">
+                            <div class="task-priority low"></div>
+                            <h4>Review workplace safety protocols</h4>
+                            <p>Read through company safety guidelines</p>
+                            <div class="task-meta">
+                                <span class="due-date">Due: Oct 8</span>
+                                <span class="category learning">Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kanban-column">
+                        <h3>In Progress</h3>
+                        <div class="task-card" data-task-id="1">
+                            <div class="task-priority high"></div>
+                            <h4>Complete project proposal draft</h4>
+                            <p>Write first draft of the internship project proposal</p>
+                            <div class="subtasks">
+                                <div class="subtask completed">Research project background</div>
+                                <div class="subtask completed">Write problem statement</div>
+                                <div class="subtask">Define project objectives</div>
+                                <div class="subtask">Create timeline</div>
+                            </div>
+                            <div class="task-meta">
+                                <span class="due-date">Due: Oct 5</span>
+                                <span class="category project-work">Project Work</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kanban-column">
+                        <h3>Completed</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div id="list-view" class="task-view">
+                <div class="task-list">
+                    <div class="task-list-item high-priority">
+                        <div class="task-checkbox">
+                            <input type="checkbox" id="task1">
+                        </div>
+                        <div class="task-details">
+                            <h4>Complete project proposal draft</h4>
+                            <p>Write first draft of the internship project proposal</p>
+                            <div class="task-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 50%"></div>
+                                </div>
+                                <span>50% Complete</span>
+                            </div>
+                        </div>
+                        <div class="task-info">
+                            <span class="due-date">Oct 5</span>
+                            <span class="priority-badge high">High</span>
+                        </div>
+                    </div>
+                    <div class="task-list-item medium-priority">
+                        <div class="task-checkbox">
+                            <input type="checkbox" id="task2">
+                        </div>
+                        <div class="task-details">
+                            <h4>Weekly team meeting preparation</h4>
+                            <p>Prepare talking points and questions for team meeting</p>
+                        </div>
+                        <div class="task-info">
+                            <span class="due-date">Oct 2</span>
+                            <span class="priority-badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <div class="task-list-item low-priority">
+                        <div class="task-checkbox">
+                            <input type="checkbox" id="task3">
+                        </div>
+                        <div class="task-details">
+                            <h4>Review workplace safety protocols</h4>
+                            <p>Read through company safety guidelines</p>
+                        </div>
+                        <div class="task-info">
+                            <span class="due-date">Oct 8</span>
+                            <span class="priority-badge low">Low</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendar-view" class="task-view">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav-btn" id="prevMonth">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="calendarTitle">October 2025</h3>
+                        <button class="calendar-nav-btn" id="nextMonth">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        
+                        <!-- Calendar days will be generated by JavaScript -->
+                        <div class="calendar-day empty"></div>
+                        <div class="calendar-day empty"></div>
+                        <div class="calendar-day empty"></div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day has-task">
+                            <span class="day-number">2</span>
+                            <div class="task-dot high"></div>
+                            <div class="day-tasks">
+                                <div class="mini-task">Meeting prep</div>
+                            </div>
+                        </div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day has-task">
+                            <span class="day-number">5</span>
+                            <div class="task-dot medium"></div>
+                            <div class="day-tasks">
+                                <div class="mini-task">Project draft</div>
+                            </div>
+                        </div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day has-task">
+                            <span class="day-number">8</span>
+                            <div class="task-dot low"></div>
+                            <div class="day-tasks">
+                                <div class="mini-task">Safety protocols</div>
+                            </div>
+                        </div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                        <div class="calendar-day">15</div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deadlines Section -->
+        <section id="deadlines" class="content-section">
+            <div class="section-header">
+                <h2>Deadline Management</h2>
+                <button class="btn btn--primary">
+                    <i class="fas fa-plus"></i> Add Deadline
+                </button>
+            </div>
+            
+            <div class="deadline-grid">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Upcoming Deadlines</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="deadline-item urgent">
+                            <div class="deadline-date">
+                                <span class="day">2</span>
+                                <span class="month">Oct</span>
+                            </div>
+                            <div class="deadline-info">
+                                <h4>Weekly team meeting preparation</h4>
+                                <div class="countdown">2 days remaining</div>
+                            </div>
+                        </div>
+                        <div class="deadline-item normal">
+                            <div class="deadline-date">
+                                <span class="day">5</span>
+                                <span class="month">Oct</span>
+                            </div>
+                            <div class="deadline-info">
+                                <h4>Complete project proposal draft</h4>
+                                <div class="countdown">5 days remaining</div>
+                            </div>
+                        </div>
+                        <div class="deadline-item normal">
+                            <div class="deadline-date">
+                                <span class="day">8</span>
+                                <span class="month">Oct</span>
+                            </div>
+                            <div class="deadline-info">
+                                <h4>Review workplace safety protocols</h4>
+                                <div class="countdown">8 days remaining</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Add New Deadline</h3>
+                    </div>
+                    <div class="card__body">
+                        <form class="deadline-form">
+                            <div class="form-group">
+                                <label class="form-label">Task Title</label>
+                                <input type="text" class="form-control" placeholder="Enter task title">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Due Date</label>
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Priority</label>
+                                <select class="form-control">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Reminder Settings</label>
+                                <div class="reminder-options">
+                                    <label>
+                                        <input type="checkbox" checked> 1 day before
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" checked> 3 hours before
+                                    </label>
+                                    <label>
+                                        <input type="checkbox"> 1 hour before
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Add Deadline</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meetings Section -->
+        <section id="meetings" class="content-section">
+            <div class="section-header">
+                <h2>Meeting Transcription & Notes</h2>
+                <div class="search-box">
+                    <input type="text" placeholder="Search meetings..." class="form-control">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="meetings-grid">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Recent Meetings</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="meeting-item">
+                            <div class="meeting-info">
+                                <h4>Weekly Team Standup</h4>
+                                <p>September 28, 2025 • 30 minutes</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm" onclick="showMeetingDetails()">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card meeting-details" id="meetingDetails">
+                    <div class="card__header">
+                        <h3>Weekly Team Standup - September 28, 2025</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="meeting-tabs">
+                            <button class="tab-btn active" data-tab="transcript">Transcript</button>
+                            <button class="tab-btn" data-tab="summary">Summary</button>
+                            <button class="tab-btn" data-tab="actions">Action Items</button>
+                        </div>
+
+                        <div id="transcript" class="tab-content active">
+                            <div class="transcript">
+                                <div class="speaker-line">
+                                    <span class="speaker">Sarah:</span>
+                                    <span class="text">Good morning everyone, let's start with our weekly standup. Alex, would you like to share what you worked on this week?</span>
+                                </div>
+                                <div class="speaker-line">
+                                    <span class="speaker">Alex:</span>
+                                    <span class="text">Hi everyone. This week I focused on the data analysis for the customer feedback project. I managed to process about 80% of the survey responses and identified three key themes in the feedback. The main areas customers want us to improve are response time, user interface design, and mobile compatibility.</span>
+                                </div>
+                                <div class="speaker-line">
+                                    <span class="speaker">Sarah:</span>
+                                    <span class="text">That's great progress Alex. Any blockers or challenges?</span>
+                                </div>
+                                <div class="speaker-line">
+                                    <span class="speaker">Alex:</span>
+                                    <span class="text">I'm having some difficulty with the statistical analysis software. I might need some guidance on the advanced features.</span>
+                                </div>
+                                <div class="speaker-line">
+                                    <span class="speaker">Sarah:</span>
+                                    <span class="text">No problem, I'll connect you with Maria from the data team. She's an expert with that software. Let's schedule a knowledge transfer session for early next week.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="summary" class="tab-content">
+                            <div class="meeting-summary">
+                                <h4>Key Discussion Points</h4>
+                                <ul>
+                                    <li>Alex completed 80% of survey response processing for customer feedback project</li>
+                                    <li>Three key improvement areas identified: response time, UI design, mobile compatibility</li>
+                                    <li>Need for statistical analysis software training identified</li>
+                                </ul>
+                                <h4>Outcomes</h4>
+                                <p>Sarah will arrange technical support meeting with Maria from data team for statistical analysis guidance.</p>
+                            </div>
+                        </div>
+
+                        <div id="actions" class="tab-content">
+                            <div class="action-items">
+                                <h4>Action Items</h4>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action1">
+                                    <label for="action1">Alex to continue data analysis</label>
+                                    <span class="assignee">Assigned to: Alex</span>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action2">
+                                    <label for="action2">Sarah to arrange meeting with Maria</label>
+                                    <span class="assignee">Assigned to: Sarah</span>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action3">
+                                    <label for="action3">Schedule knowledge transfer session</label>
+                                    <span class="assignee">Assigned to: Team</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="content-section">
+            <div class="section-header">
+                <h2>Resource Library</h2>
+                <div class="search-box">
+                    <input type="text" placeholder="Search resources..." class="form-control">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="resources-grid">
+                <div class="card">
+                    <div class="card__header">
+                        <h3><i class="fas fa-comments"></i> Communication</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="resource-item">
+                            <div class="resource-icon">📧</div>
+                            <div class="resource-info">
+                                <h4>Email Writing Templates</h4>
+                                <p>Professional email templates for common workplace situations</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-icon">🤝</div>
+                            <div class="resource-info">
+                                <h4>Meeting Etiquette Guide</h4>
+                                <p>Best practices for participating in workplace meetings</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3><i class="fas fa-briefcase"></i> Workplace Skills</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="resource-item">
+                            <div class="resource-icon">⏰</div>
+                            <div class="resource-info">
+                                <h4>Time Management Strategies</h4>
+                                <p>Techniques for managing time and priorities effectively</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-icon">📋</div>
+                            <div class="resource-info">
+                                <h4>Project Planning Template</h4>
+                                <p>Step-by-step template for planning internship projects</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3><i class="fas fa-user-shield"></i> Self-Advocacy</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="resource-item">
+                            <div class="resource-icon">🛡️</div>
+                            <div class="resource-info">
+                                <h4>Accommodation Request Guide</h4>
+                                <p>How to request workplace accommodations professionally</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                        <div class="resource-item">
+                            <div class="resource-icon">🧘</div>
+                            <div class="resource-info">
+                                <h4>Stress Management Techniques</h4>
+                                <p>Strategies for managing stress and overwhelm at work</p>
+                            </div>
+                            <button class="btn btn--outline btn--sm">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="content-section">
+            <div class="section-header">
+                <h2>Settings & Customization</h2>
+            </div>
+
+            <div class="settings-grid">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Appearance</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label class="form-label">Theme</label>
+                            <select class="form-control" id="themeSelect">
+                                <option value="auto">Auto (Follow system)</option>
+                                <option value="light">Light Mode</option>
+                                <option value="dark">Dark Mode</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Font Size</label>
+                            <div class="font-size-controls">
+                                <button class="btn btn--outline btn--sm">Small</button>
+                                <button class="btn btn--primary btn--sm">Medium</button>
+                                <button class="btn btn--outline btn--sm">Large</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">High Contrast</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="highContrast">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Notifications</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label class="form-label">Task Reminders</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="taskReminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Meeting Notifications</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="meetingNotifications" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Break Reminders</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="breakReminders">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Accessibility</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label class="form-label">Reduce Motion</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="reduceMotion">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Screen Reader Support</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="screenReader" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Keyboard Navigation</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="keyboardNav" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Principles Image -->
+                <div class="card design-principles-card">
+                    <div class="card__header">
+                        <h3>Autism-Friendly Design Principles</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="design-principles-wrapper">
+                            <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7e33f05c8d808293b50d3f649bf25bc8/c4f28220-f3fa-4ffd-8730-5fbc6204ec13/1d2a0370.png" 
+                                 alt="Autism-Friendly Design Principles infographic showing visual design, cognitive accessibility, sensory considerations, executive function support, and communication/social support" 
+                                 class="design-principles-diagram"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div class="image-fallback" style="display: none;">
+                                <div class="principles-text">
+                                    <h4>Design Principles for Neurodivergent Users:</h4>
+                                    <ul>
+                                        <li><strong>Visual Design:</strong> Clear contrast, consistent layouts, minimal distractions</li>
+                                        <li><strong>Cognitive Accessibility:</strong> Simple language, clear instructions, predictable navigation</li>
+                                        <li><strong>Sensory Considerations:</strong> Calm colors, reduced motion, customizable interfaces</li>
+                                        <li><strong>Executive Function Support:</strong> Task organization, reminders, progress tracking</li>
+                                        <li><strong>Communication Support:</strong> Multiple ways to access information, visual aids</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Help Modal -->
+    <div class="modal hidden" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ask for Help</h3>
+                <button class="modal-close" onclick="closeHelpModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>What do you need help with?</p>
+                <div class="help-options">
+                    <button class="help-option-btn">
+                        <i class="fas fa-tasks"></i>
+                        <span>Task Management</span>
+                    </button>
+                    <button class="help-option-btn">
+                        <i class="fas fa-calendar"></i>
+                        <span>Scheduling</span>
+                    </button>
+                    <button class="help-option-btn">
+                        <i class="fas fa-comments"></i>
+                        <span>Communication</span>
+                    </button>
+                    <button class="help-option-btn">
+                        <i class="fas fa-cog"></i>
+                        <span>Technical Support</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Describe your request:</label>
+                    <textarea class="form-control" rows="3" placeholder="Please provide details about what you need help with..."></textarea>
+                </div>
+                <div class="urgency-selector">
+                    <label class="form-label">Urgency Level:</label>
+                    <div class="urgency-options">
+                        <label>
+                            <input type="radio" name="urgency" value="low" checked>
+                            <span class="urgency-badge low">Low</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="urgency" value="medium">
+                            <span class="urgency-badge medium">Medium</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="urgency" value="high">
+                            <span class="urgency-badge high">High</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" onclick="closeHelpModal()">Cancel</button>
+                <button class="btn btn--primary" onclick="submitHelpRequest()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="notification hidden" id="successNotification">
+        <div class="notification-content success">
+            <i class="fas fa-check-circle"></i>
+            <span>Help request submitted successfully!</span>
+        </div>
+    </div>
+    <script type="module">
+    import { checkAuth, logoutUser } from "./js/auth.js";
+    checkAuth();
+    window.logoutUser = logoutUser;
+    </script>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
