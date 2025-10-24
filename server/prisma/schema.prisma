@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -16,22 +16,32 @@ model User {
   tasks        Task[]
   meetings     Meeting[]
   helpRequests HelpRequest[]
+  recipientDeadlines Deadline[] @relation("RecipientUser")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
 
+enum TaskStatus {
+  pending
+  in_progress
+  completed
+}
+
 model Task {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  user        User      @relation(fields: [userId], references: [id])
+  id          Int          @id @default(autoincrement())
+  userId      Int?
+  user        User?        @relation(fields: [userId], references: [id])
   title       String
   description String?
-  priority    String     @default("medium")
+  priority    String       @default("medium")
   dueDate     DateTime?
-  status      String     @default("pending")
+  status      TaskStatus   @default(pending)
+  orderIndex  Int          @default(0)
   category    String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  deadlines   Deadline[]
+  subtasks    Subtask[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Meeting {
@@ -67,3 +77,44 @@ model Resource {
   createdAt DateTime @default(now())
 }
 
+model Deadline {
+  id        Int      @id @default(autoincrement())
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  title     String?
+  dueAt     DateTime
+  recipientEmail String?
+  recipientUserId Int?
+  recipientUser   User?    @relation("RecipientUser", fields: [recipientUserId], references: [id])
+  reminders DeadlineReminder[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DeadlineReminder {
+  id            Int       @id @default(autoincrement())
+  deadlineId    Int
+  deadline      Deadline  @relation(fields: [deadlineId], references: [id], onDelete: Cascade)
+  offsetMinutes Int       @default(60) // minutes before dueAt
+  sentAt        DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  subject   String
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model Subtask {
+  id         Int     @id @default(autoincrement())
+  taskId     Int
+  task       Task    @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  title      String
+  done       Boolean @default(false)
+  orderIndex Int     @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
